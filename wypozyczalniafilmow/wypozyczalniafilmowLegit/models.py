@@ -25,7 +25,7 @@ class Pracownik(models.Model):
         ('MID', 'Mid'),
         ('SR', 'Senior'),
     )
-    PESEL = models.CharField(max_length=2)
+    Wiek = models.CharField(max_length=2)
 
 class Gatunek(models.Model):
     Zaliczka = models.CharField(max_length=45)
@@ -40,9 +40,9 @@ class Filmy(models.Model):
     Czas_trwania = models.CharField(max_length=45)
 
 class Rejestr_wypozyczen(models.Model):
-    filmy = models.ForeignKey(Filmy, on_delete=models.RESTRICT )
+    filmy = models.ForeignKey(Filmy, on_delete=models.CASCADE)
     platnosci = models.ForeignKey(Platnosci, on_delete=models.CASCADE)
-    pracownik = models.ForeignKey(Pracownik, on_delete=models.RESTRICT)
+    pracownik = models.ForeignKey(Pracownik, on_delete=models.CASCADE)
     klient = models.ForeignKey(Klient, on_delete=models.CASCADE)
     Data_wypozyczenia = models.DateTimeField('data wypozyczenia')
     Data_zwrotu = models.DateTimeField('data zwrotu')
