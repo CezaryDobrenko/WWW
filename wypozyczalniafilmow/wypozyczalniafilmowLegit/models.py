@@ -9,7 +9,7 @@ class Klient(models.Model):
     Nazwisko = models.CharField(max_length=45)
     PESEL = models.CharField(max_length=11)
     Ulica = models.CharField(max_length=45)
-    Misasto = models.CharField(max_length=45)
+    Miasto = models.CharField(max_length=45)
     Telefon = models.CharField(max_length=15)
 
 class Platnosci(models.Model):
@@ -28,8 +28,7 @@ class Pracownik(models.Model):
     Wiek = models.CharField(max_length=2)
 
 class Gatunek(models.Model):
-    Zaliczka = models.CharField(max_length=45)
-    Doplata = models.CharField(max_length=45)
+    Gatunek = models.CharField(max_length=45)
 
 class Filmy(models.Model):
     rezyser = models.ForeignKey(Rezyser, on_delete=models.CASCADE)
