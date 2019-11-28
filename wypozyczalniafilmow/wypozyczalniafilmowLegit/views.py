@@ -44,13 +44,13 @@ def Pracownik_list(request):
     if request.method == 'GET':
         Pracownicy = Pracownik.objects.all()
         serializer = PracownikSerializer(Pracownicy, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data)
     if request.method == 'POST':
         serializer = PracownikSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status.HTTP_201_CREATED)
-        return JsonResponse(serializer.data, status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','PUT','DELETE'])
 def Pracownik_detail(request, pk):
@@ -60,13 +60,77 @@ def Pracownik_detail(request, pk):
         return HttpResponse(status=404)
     if request.method == 'GET':
         serializer = PracownikSerializer(pracownik)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
     if request.method == 'PUT':
         serializer = PracownikSerializer(pracownik, request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status.HTTP_201_CREATED)
-        return JsonResponse(serializer.data, status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
     if request.method == 'DELETE':
         pracownik.delete()
+        return Response(status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET','POST'])
+def Rezyser_list(request):
+    if request.method == 'GET':
+        Rerzyserzy = Rezyser.objects.all()
+        serializer = RezyserSerializer(Rerzyserzy, many=True)
+        return Response(serializer.data)
+    if request.method == 'POST':
+        serializer = RezyserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET','PUT','DELETE'])
+def Rezyser_detail(request, pk):
+    try:
+        rezyser = Rezyser.objects.get(pk=pk)
+    except Rezyser.DoesNotExist:
+        return HttpResponse(status=404)
+    if request.method == 'GET':
+        serializer = RezyserSerializer(rezyser)
+        return Response(serializer.data)
+    if request.method == 'PUT':
+        serializer = RezyserSerializer(rezyser, request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
+    if request.method == 'DELETE':
+        rezyser.delete()
+        return Response(status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET','POST'])
+def Film_list(request):
+    if request.method == 'GET':
+        Film = Filmy.objects.all()
+        serializer = FilmySerializer(Film, many=True)
+        return Response(serializer.data)
+    if request.method == 'POST':
+        serializer = FilmySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET','PUT','DELETE'])
+def Film_detail(request, pk):
+    try:
+        Film = Filmy.objects.get(pk=pk)
+    except Rezyser.DoesNotExist:
+        return HttpResponse(status=404)
+    if request.method == 'GET':
+        serializer = FilmySerializer(Film)
+        return Response(serializer.data)
+    if request.method == 'PUT':
+        serializer = FilmySerializer(Film, request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
+    if request.method == 'DELETE':
+        Film.delete()
         return Response(status.HTTP_204_NO_CONTENT)
