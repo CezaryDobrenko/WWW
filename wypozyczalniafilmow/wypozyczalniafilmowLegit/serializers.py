@@ -1,5 +1,13 @@
 from rest_framework import serializers
 from .models import *
+from django.contrib.auth.models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    Klient = serializers.PrimaryKeyRelatedField(many=True, queryset=Klient.objects.all())
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'Klient']
 
 class RezyserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,9 +15,10 @@ class RezyserSerializer(serializers.ModelSerializer):
         fields = ['id', 'Imie', 'Nazwisko']
 
 class KlientSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Klient
-        fields = ['id', 'Imie', 'Nazwisko', 'PESEL', 'Ulica', 'Miasto', 'Telefon']
+        fields = ['id', 'Imie', 'Nazwisko', 'PESEL', 'Ulica', 'Miasto', 'Telefon','Tworca']
 
 class PlatnosciSerializer(serializers.ModelSerializer):
     class Meta:

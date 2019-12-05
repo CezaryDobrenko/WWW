@@ -11,6 +11,8 @@ class Klient(models.Model):
     Ulica = models.CharField(max_length=45)
     Miasto = models.CharField(max_length=45)
     Telefon = models.CharField(max_length=15)
+    Tworca = models.ForeignKey('auth.User', related_name='Klient', on_delete=models.CASCADE)
+1
 
 class Platnosci(models.Model):
     Zaliczka = models.CharField(max_length=45)
