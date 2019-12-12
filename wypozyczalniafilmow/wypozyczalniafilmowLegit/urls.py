@@ -12,5 +12,4 @@ urlpatterns = [
     path('rezyser/<int:pk>', views.Rezyser_detail),
     path('filmy', views.Film_list),
     path('film/<int:pk>', views.Film_detail),
-
 ]

@@ -4,7 +4,7 @@ class Rezyser(models.Model):
     Imie = models.CharField(max_length=45)
     Nazwisko = models.CharField(max_length=45)
 
-class Klient(models.Model):
+class Klient(models.Model): 
     Imie = models.CharField(max_length=45)
     Nazwisko = models.CharField(max_length=45)
     PESEL = models.CharField(max_length=11)

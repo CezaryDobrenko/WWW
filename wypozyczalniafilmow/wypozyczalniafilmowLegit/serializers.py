@@ -18,7 +18,7 @@ class KlientSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Klient
-        fields = ['id', 'Imie', 'Nazwisko', 'PESEL', 'Ulica', 'Miasto', 'Telefon','Tworca']
+        fields = ['id', 'Imie', 'Nazwisko', 'PESEL', 'Ulica', 'Miasto', 'Telefon','owner']
 
 class PlatnosciSerializer(serializers.ModelSerializer):
     class Meta:

@@ -11,7 +11,7 @@ from rest_framework import permissions
 from django.http import Http404
 
 class Klient_list(APIView):
-   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+   permission_classes = [permissions.IsAuthenticated]
 
    def get(self, request, format=None):
        Klienci = Klient.objects.all()
@@ -27,7 +27,7 @@ class Klient_list(APIView):
 
 
 class Klient_detail(APIView):
-   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+   permission_classes = [permissions.IsAdminUser]
 
    def get_object(self, pk):
        try:
