@@ -53,6 +53,49 @@ class Klient_detail(APIView):
        question.delete()
        return Response(status=status.HTTP_204_NO_CONTENT)
 
+class Pracownik_list(APIView):
+   permission_classes = [permissions.IsAuthenticated]
+
+   def get(self, request, format=None):
+       Pracownicy = Pracownik.objects.all()
+       serializer = PracownikSerializer(Pracownicy, many=True)
+       return Response(serializer.data)
+
+   def post(self, request, format=None):
+       serializer = PracownikSerializer(data=request.data)
+       if serializer.is_valid():
+           serializer.save(owner=self.request.user)
+           return Response(serializer.data, status=status.HTTP_201_CREATED)
+       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Pracownik_detail(APIView):
+   permission_classes = [permissions.IsAdminUser]
+
+   def get_object(self, pk):
+       try:
+           return Pracownik.objects.get(pk=pk)
+       except Pracownik.DoesNotExist:
+           raise Http404
+
+   def get(self, request, pk, format=None):
+       question = self.get_object(pk)
+       serializer = PracownikSerializer(question)
+       return Response(serializer.data)
+
+   def put(self, request, pk, format=None):
+       question = self.get_object(pk)
+       serializer = PracownikSerializer(question, data=request.data)
+       if serializer.is_valid():
+           serializer.save()
+           return Response(serializer.data)
+       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+   def delete(self, request, pk, format=None):
+       question = self.get_object(pk)
+       question.delete()
+       return Response(status=status.HTTP_204_NO_CONTENT)
+
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -60,40 +103,6 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-
-@api_view(['GET','POST'])
-def Pracownik_list(request):
-    if request.method == 'GET':
-        Pracownicy = Pracownik.objects.all()
-        serializer = PracownikSerializer(Pracownicy, many=True)
-        return Response(serializer.data)
-    if request.method == 'POST':
-        serializer = PracownikSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET','PUT','DELETE'])
-def Pracownik_detail(request, pk):
-    try:
-        pracownik = Pracownik.objects.get(pk=pk)
-    except Pracownik.DoesNotExist:
-        return HttpResponse(status=404)
-    if request.method == 'GET':
-        serializer = PracownikSerializer(pracownik)
-        return Response(serializer.data)
-    if request.method == 'PUT':
-        serializer = PracownikSerializer(pracownik, request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
-    if request.method == 'DELETE':
-        pracownik.delete()
-        return Response(status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET','POST'])
 def Rezyser_list(request):

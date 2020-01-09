@@ -12,7 +12,6 @@ class Klient(models.Model):
     Miasto = models.CharField(max_length=45)
     Telefon = models.CharField(max_length=15)
     Tworca = models.ForeignKey('auth.User', related_name='Klient', on_delete=models.CASCADE)
-1
 
 class Platnosci(models.Model):
     Zaliczka = models.CharField(max_length=45)
@@ -28,6 +27,7 @@ class Pracownik(models.Model):
         ('SR', 'Senior'),
     )
     Wiek = models.CharField(max_length=2)
+    Tworca = models.ForeignKey('auth.User', related_name='Pracownik', on_delete=models.CASCADE)
 
 class Gatunek(models.Model):
     Gatunek = models.CharField(max_length=45)

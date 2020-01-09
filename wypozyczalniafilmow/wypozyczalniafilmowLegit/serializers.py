@@ -20,15 +20,16 @@ class KlientSerializer(serializers.ModelSerializer):
         model = Klient
         fields = ['id', 'Imie', 'Nazwisko', 'PESEL', 'Ulica', 'Miasto', 'Telefon','owner']
 
+class PracownikSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    class Meta:
+        model = Pracownik
+        fields = ['id', 'Imie', 'Nazwisko', 'PESEL', 'Stanowisko', 'Wiek','owner']
+
 class PlatnosciSerializer(serializers.ModelSerializer):
     class Meta:
         model = Platnosci
         fields = ['id', 'Zaliczka', 'Doplata']
-
-class PracownikSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Pracownik
-        fields = ['id', 'Imie', 'Nazwisko', 'PESEL', 'Stanowisko', 'Wiek']
 
 class GatunekSerializer(serializers.ModelSerializer):
     class Meta:
